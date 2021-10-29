@@ -1,0 +1,18 @@
+*{
+    list-style: none;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+header{
+    background: #c3c3c3;
+}
+.menu ul{
+    display: flex;
+}
+.menu ul li{
+    padding: 15px;
+}
