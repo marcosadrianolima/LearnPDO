@@ -20,19 +20,22 @@ error_reporting(0);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <?php include '../template/style.php';?>
 </head>
 <body>
-        <header>
-            <div class="container menu">
-                <ul>
-                    <li><a href="../usuario">Usuarios</a></li>
-                    <li><a href="../usuario">Usuarios</a></li>
-                </ul>
-            </div>
-        </header>
-        <main>
-            <section class="container">
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      
+      <?php include '../template/header.php';?>
+      <?php include '../template/sidebar-navegation.php';?>
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
+          <section class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <h5>Pesquisa</h5>
@@ -83,14 +86,16 @@ error_reporting(0);
                     </tbody>
                   </table>
             </section>
-        </main>
-        <footer>
-
-        </footer>
+          </div>
+        </section>
+        <?php include '../template/sidebar-style.php';?>
+      </div>
+      <?php include '../template/footer.php';?>
+    </div>
+  </div>
+  
         
-        <script src="../public/js/bootstrap.bundle.min.js"></script>
-        <script src="../public/js/bootstrap.esm.min.js"></script>
-        <script src="../public/js/bootstrap.min.js"></script>
+  <?php include '../template/scripts.php';?>
 </body>
 </html>
         

@@ -70,18 +70,21 @@ error_reporting(0);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
-    <link rel="stylesheet" href="../public/css/style.css">
+    <?php include '../template/style.php';?>
 </head>
 <body>
-        <header>
-            <div class="container menu">
-                <ul>
-                    <li><a href="../usuario">Usuarios</a></li>
-                    <li><a href="../usuario">Usuarios</a></li>
-                </ul>
-            </div>
-        </header>
-        <main>
+<body>
+  <div class="loader"></div>
+  <div id="app">
+    <div class="main-wrapper main-wrapper-1">
+      <div class="navbar-bg"></div>
+      
+      <?php include '../template/header.php';?>
+      <?php include '../template/sidebar-navegation.php';?>
+      <!-- Main Content -->
+      <div class="main-content">
+        <section class="section">
+          <div class="section-body">
             <section class="container">
                 <h5><?= $NomePagina ?></h5>
                 
@@ -106,8 +109,9 @@ error_reporting(0);
                         value="<?= $usuarioEdit["idade"] ?>">
                         <small class="form-text text-muted">Informe a idade em forma numérica.</small>
                         </div>
-                        <button type="submit" name="salvar" value="salvar" class="btn btn-primary">Salvar</button>
-                        <button type="submit" name="delete" value="delete" class="btn btn-danger">Excluir</button>
+                        <a href="../usuario" class="btn btn-primary"> Voltar</a>
+                        <button type="submit" name="salvar" value="salvar" class="btn btn-success pull-right">Salvar</button>
+                        <button type="submit" name="delete" value="delete" class="btn btn-danger pull-right">Excluir</button>
                     <?php else: ?>
                         <div class="form-group">
                         <label>Nome completo</label>
@@ -119,18 +123,21 @@ error_reporting(0);
                         <input name="idade" type="text" class="form-control" placeholder="Idade">
                         <small class="form-text text-muted">Informe a idade em forma numérica.</small>
                         </div>
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                        <a href="../usuario" class="btn btn-primary"> Voltar</a>
+                        <button type="submit" class="btn btn-success pull-right">Salvar</button>
                     <?php endif ?>
                 </form>
             </section>
-        </main>
-        <footer>
-
-        </footer>
+          </div>
+        </section>
+        <?php include '../template/sidebar-style.php';?>
+      </div>
+      <?php include '../template/footer.php';?>
+    </div>
+  </div>
+  
         
-        <script src="../public/js/bootstrap.bundle.min.js"></script>
-        <script src="../public/js/bootstrap.esm.min.js"></script>
-        <script src="../public/js/bootstrap.min.js"></script>
+  <?php include '../template/scripts.php';?>
 </body>
 </html>
         
