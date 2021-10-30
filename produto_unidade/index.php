@@ -1,17 +1,21 @@
 <?php
 require ".././Config.php";
-require "./UsuarioDAO.php";
+require "./ProdutoUnidadeDAO.php";
 error_reporting(0);
-        $title = "Usuários";
-        $usuario = new UsuarioDAO();
-        $usuarios = $usuario->listarUsuarios();
+        
+        $title = "Unidade de produtos";
+        $ProdutoUnidade = new ProdutoUnidadeDAO();
+        $ProdutoUnidades = $ProdutoUnidade->ListarProdutoUnidade();
+        // echo"<pre>";
+        // var_dump($ProdutoUnidades);
+        // die("");
         $message = '';
         if($_GET['message']){
             $message = $_GET['message'];
         } 
         if($_POST){
-           $usuario = new UsuarioDAO();
-           $usuarios = $usuario->pesquisaUsuario($_POST["pesquisa-usuarios"]);
+          //  $usuario = new UsuarioDAO();
+          //  $usuarios = $usuario->pesquisaUsuario($_POST["pesquisa-usuarios"]);
         }
 ?>
 <!DOCTYPE html>
@@ -51,7 +55,7 @@ error_reporting(0);
                         </form>
                     </div>
                     <div class="col-md-6" style="text-align: right;">
-                        <h5>Cadastrar novo usuário</h5>
+                        <h5>Cadastrar nova unidade</h5>
                         <a href="./usuario_crud.php?" class="btn btn-success">Cadastrar</a>
                     </div>
                 </div>
@@ -64,22 +68,22 @@ error_reporting(0);
                     <thead>
                       <tr>
                         <th scope="col">#ID</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Idade</th>
+                        <th scope="col">Sigla</th>
+                        <th scope="col">Descrição</th>
                         <th scope="col">Ação</th>
                       </tr>
                     </thead>
                     <tbody>
                         
-                    <?php if ($usuarios): ?>
+                    <?php if ($ProdutoUnidades): ?>
                         <form method="post" id="form">
                         
-                        <?php foreach($usuarios as $key=>$usuario): ?>
+                        <?php foreach($ProdutoUnidades as $key=>$ProdutoUnidade): ?>
                         <tr>
-                            <th scope="row"name="<?= $usuario['id'] ?>" form="form"><?= $usuario['id'] ?></th>
-                            <td name="<?= $usuario['nome'] ?>" form="form"><?= $usuario['nome'] ?></td>
-                            <td name="<?= $usuario['idade'] ?>" form="form"><?= $usuario['idade'] ?></td>
-                            <td><a href="./usuario_crud.php?id=<?= $usuario['id'] ?>"> Editar</a></td>
+                            <th scope="row"name="<?= $usuario['id'] ?>" form="form"><?= $ProdutoUnidade['id'] ?></th>
+                            <td name="<?= $ProdutoUnidade['sigla'] ?>" form="form"><?= $ProdutoUnidade['sigla'] ?></td>
+                            <td name="<?= $ProdutoUnidade['descricao'] ?>" form="form"><?= $ProdutoUnidade['descricao'] ?></td>
+                            <td><a href="./usuario_crud.php?id=<?= $ProdutoUnidade['id'] ?>"> Editar</a></td>
                         </tr>
                         <?php endforeach; ?>
                         </form>
