@@ -1,12 +1,13 @@
 <?php
+require "../Config.php";
 require "./UsuarioDAO.php";
-require "./Usuario.php";
 error_reporting(0);
         $title = "Cadastro Usuário";
         $NomePagina = "Cadastro usuário";
         $message = "";
-
+  
         if(isset($_GET['id']) && is_numeric($_GET['id'])){
+            //EDITAR USUÁRIO
             $identificador = $_GET['id'];
             $usuario = new UsuarioDAO();
             $usuarioEdit = $usuario->getUsuarioById($identificador);
@@ -31,16 +32,17 @@ error_reporting(0);
                     $message = 'Usuário com dados incompletos, informe todos os campos';
                     header("location: ./usuario_crud.php?id=".$data['id']."&message=$message");
                 }else{
-                    
+                    //DELETAR USUÁRIO
                     if($_POST["delete"]){
                         if($usuario->deleteUsuario($data)){
-                            $message = 'Usuario '.$data["nome"].' excluído com sucesso';
+                            $message = 'Usuario '.$data["nome"].' excluído com sucesso!';
                             header("location: ./index.php?message=$message");
                         }else{
                             $message = 'Usuario '.$data["nome"].' não foi excluído';
                             header("location: ./usuario_crud.php?id=".$data['id']."&message=$message");
                         }                        
                     }
+                    //EDITAR USUÁRIO
                     if($_POST["salvar"]){
                         $message = $usuario->editarUsuario($data);
                         header("location: ./index.php?message=$message");
@@ -48,6 +50,7 @@ error_reporting(0);
                 }
                 
             }else{
+                //CADASTRAR USUÁRIO 
                 $usuario = new UsuarioDAO();
                 $data = [
                     'id' => NULL, 
@@ -58,34 +61,25 @@ error_reporting(0);
                     $message = 'Preencha todos os dados';
                 }else{
                     $message = $usuario->cadastrarUsuario($data);
+                    if($message === true){
+                      $message = 'Usuario '.$data["nome"].' inserido com sucesso!';
+                      header("location: ./?id=".$data['id']."&message=$message");
+                    }else{
+                      $message = 'Erro ao inserir usuário';
+                    }
                 }
             }            
         } 
         
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
-    <?php include '../template/style.php';?>
-</head>
-<body>
-<body>
-  <div class="loader"></div>
-  <div id="app">
-    <div class="main-wrapper main-wrapper-1">
-      <div class="navbar-bg"></div>
-      
-      <?php include '../template/header.php';?>
-      <?php include '../template/sidebar-navegation.php';?>
+    <?php include '../template/head.php';?>
+    <?php include '../template/header.php';?>
+    <?php include '../template/sidebar-navegation.php';?>
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-body">
-            <section class="container">
+            <section class="container-fluid">
                 <h5><?= $NomePagina ?></h5>
                 
                 <?php if (!empty($message)): ?>
@@ -130,16 +124,9 @@ error_reporting(0);
             </section>
           </div>
         </section>
-        <?php include '../template/sidebar-style.php';?>
       </div>
-      <?php include '../template/footer.php';?>
-    </div>
-  </div>
-  
-        
-  <?php include '../template/scripts.php';?>
-</body>
-</html>
+    <?php include '../template/footer.php';?>
+    
         
         
     

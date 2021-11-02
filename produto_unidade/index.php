@@ -3,7 +3,7 @@ require ".././Config.php";
 require "./ProdutoUnidadeDAO.php";
 error_reporting(0);
         
-        $title = "Unidade de produtos";
+        $title = "Unidades de produtos";
         $ProdutoUnidade = new ProdutoUnidadeDAO();
         $ProdutoUnidades = $ProdutoUnidade->ListarProdutoUnidade();
         // echo"<pre>";
@@ -13,102 +13,90 @@ error_reporting(0);
         if($_GET['message']){
             $message = $_GET['message'];
         } 
-        if($_POST){
-          //  $usuario = new UsuarioDAO();
-          //  $usuarios = $usuario->pesquisaUsuario($_POST["pesquisa-usuarios"]);
+        if($_POST && !empty($_POST["pesquisa-usuarios"])){
+          $ProdutoUnidades = $ProdutoUnidade->pesquisaProdutoUnidade($_POST["pesquisa-usuarios"]);
+          $message = "Resultado para a pesquisa: ".$_POST["pesquisa-usuarios"];
+        }else{
+          $message = "Pesquisa sem conteúdo informado";
         }
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
-    <?php include '../template/style.php';?>
-</head>
-<body>
-<body>
-  <div class="loader"></div>
-  <div id="app">
-    <div class="main-wrapper main-wrapper-1">
-      <div class="navbar-bg"></div>
-      
-      <?php include '../template/header.php';?>
-      <?php include '../template/sidebar-navegation.php';?>
-      <!-- Main Content -->
-      <div class="main-content">
-        <section class="section">
-          <div class="section-body">
-          <section class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h5>Pesquisa</h5>
-                        <form name="edita_cadastra_usuarios" method="post" action="index.php" style="display: flex;">
-                            <div class="form-group">
-                                <input class="form-control" name="pesquisa-usuarios"type="text" placeholder="Faça sua pesquisa aqui">
+
+<?php include '../template/head.php';?>
+<?php include '../template/header.php';?>
+<?php include '../template/sidebar-navegation.php';?>
+
+<!-- Main Content -->
+<div class="main-content">
+    <section class="section">
+        <div class="section-body">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4><?= $title ?></h4>
+                        </div>
+                        <?php if (!empty($message)): ?>
+                        <div class="card-header">
+                            <h6><?= $message ?></h6>
+                        </div>
+                        <?php endif ?>
+                        <div class="form-group" style="display: inline-flex; padding: 10px 25px;">
+                            <div style=" width: 50%;">
+                                <form name="edita_cadastra_usuarios" method="post" action="index.php"
+                                    style="display: flex;">
+                                    <div class="form-group">
+                                        <input class="form-control" name="pesquisa-usuarios" type="text"
+                                            placeholder="Faça sua pesquisa aqui">
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-primary btn-lg">Pesquisar</button>
+                                        <a href="" class="btn btn-danger btn-lg">Limpar filtro</a>
+                                    </div>
+                                </form>
                             </div>
-                            <div>
-                                <button type="submit" class="btn btn-primary">Pesquisar</button>
-                                <a href="" class="btn btn-danger">Limpar filtro</a>
+                            <div style=" width: 50%; text-align: right;">
+                                <a href="<?= RAIZ_PROJETO ?>produto_unidade/produto_unidade_crud.php?"
+                                    class="btn btn-success btn-lg">Cadastrar</a>
                             </div>
-                        </form>
-                    </div>
-                    <div class="col-md-6" style="text-align: right;">
-                        <h5>Cadastrar nova unidade</h5>
-                        <a href="./usuario_crud.php?" class="btn btn-success">Cadastrar</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="save-stage" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#ID</th>
+                                            <th scope="col">Sigla</th>
+                                            <th scope="col">Descrição</th>
+                                            <th scope="col">Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($ProdutoUnidades): ?>
+                                        <form method="post" id="form">
+
+                                            <?php foreach($ProdutoUnidades as $key=>$ProdutoUnidade): ?>
+                                            <tr>
+                                                <th scope="row" name="<?= $usuario['id'] ?>" form="form">
+                                                    <?= $ProdutoUnidade['id'] ?></th>
+                                                <td name="<?= $ProdutoUnidade['sigla'] ?>" form="form">
+                                                    <?= $ProdutoUnidade['sigla'] ?></td>
+                                                <td name="<?= $ProdutoUnidade['descricao'] ?>" form="form">
+                                                    <?= $ProdutoUnidade['descricao'] ?></td>
+                                                <td><a
+                                                        href="<?= RAIZ_PROJETO ?>produto_unidade/produto_unidade_crud.php?id=<?= $ProdutoUnidade['id'] ?>">
+                                                        Editar</a></td>
+                                            </tr>
+                                            <?php endforeach; ?>
+                                        </form>
+                                        <?php endif ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <?php if (!empty($message)): ?>
-                    <div class="row">
-                        <h1><?= $message ?></h1>
-                    </div>
-                <?php endif ?>
-                <table class="table table-hover">
-                    <thead>
-                      <tr>
-                        <th scope="col">#ID</th>
-                        <th scope="col">Sigla</th>
-                        <th scope="col">Descrição</th>
-                        <th scope="col">Ação</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        
-                    <?php if ($ProdutoUnidades): ?>
-                        <form method="post" id="form">
-                        
-                        <?php foreach($ProdutoUnidades as $key=>$ProdutoUnidade): ?>
-                        <tr>
-                            <th scope="row"name="<?= $usuario['id'] ?>" form="form"><?= $ProdutoUnidade['id'] ?></th>
-                            <td name="<?= $ProdutoUnidade['sigla'] ?>" form="form"><?= $ProdutoUnidade['sigla'] ?></td>
-                            <td name="<?= $ProdutoUnidade['descricao'] ?>" form="form"><?= $ProdutoUnidade['descricao'] ?></td>
-                            <td><a href="./usuario_crud.php?id=<?= $ProdutoUnidade['id'] ?>"> Editar</a></td>
-                        </tr>
-                        <?php endforeach; ?>
-                        </form>
-                    <?php endif ?>
-                    </tbody>
-                  </table>
-            </section>
-          </div>
-        </section>
-        <?php include '../template/sidebar-style.php';?>
-      </div>
-      <?php include '../template/footer.php';?>
-    </div>
-  </div>
-  
-        
-  <?php include '../template/scripts.php';?>
-</body>
-</html>
-        
-        
-    
-
-
-    
-
-    
-    
+            </div>
+        </div>
+    </section>
+</div>
+<?php include '../template/footer.php';?>

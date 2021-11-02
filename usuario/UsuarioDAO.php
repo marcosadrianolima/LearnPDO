@@ -33,7 +33,7 @@
             $insert= $this->$conexao->prepare($sql);
             try{
                 $insert->execute($data);
-                return 'Usuário inserido com sucesso';
+                return true;
             }catch(exception $e){
                 return "Exceção capturada: ".  $e->getMessage(). "\n";
             }
@@ -77,7 +77,6 @@
         public function pesquisaUsuario(string $pesquisa){
             
             try {
-                
                 $sql = "SELECT * FROM `usuarios` WHERE `nome` LIKE concat('%', ?, '%') OR `idade` LIKE concat('%', ?, '%') OR `id` LIKE concat('%', ?, '%')";
         
                 $query = $this->$conexao->prepare($sql);
