@@ -1,7 +1,7 @@
 <?php
 require ".././Config.php";
-require "./ProdutoUnidadeDAO.php";
-// error_reporting(0);
+require "./ProdutoCategoriaDAO.php";
+error_reporting(0);
         
         $title = "Unidade de produtos";
         $NomePagina = "Unidade de medida";
@@ -10,63 +10,64 @@ require "./ProdutoUnidadeDAO.php";
           $message = $_GET['message'];
         }
         if(isset($_GET['id']) && $_GET['id']){
-          $ProdutoUnidade = new ProdutoUnidadeDAO();
-          $unidade = $ProdutoUnidade->getProdutoUnidadeById($_GET['id']);
+          $ProdutoUnidade = new ProdutoCategoriaDAO();
+          $unidade = $ProdutoUnidade->GetById($_GET['id']);
         }
-        if($_POST['button'] && $_POST['sigla'] && $_POST['descricao']){
+        
+        if($_POST['button'] && $_POST['nome'] && $_POST['descricao']){
             if($_POST['button'] == "cadastrar"){
                 // CADASTRAR    
                 $data = [
                   'id' => NULL, 
-                  'sigla' => $_POST['sigla'], 
+                  'nome' => $_POST['nome'], 
                   'descricao' =>$_POST['descricao']
                 ];
-                $unidade = new ProdutoUnidadeDAO();
-                $message = $unidade->cadastrarUnidade($data);
+                $categoria = new ProdutoCategoriaDAO();
+                $message = $categoria->Cadastrar($data);
                 if($message === true){
-                  $message = 'Unidade "'.$data['sigla'].'" inserida com sucesso!';
-                  header("location: ".RAIZ_PROJETO."produto_unidade/?&message=$message");
+                  $message = 'Categoria "'.$data['nome'].'" inserida com sucesso!';
+                  header("location: ".RAIZ_PROJETO."produto_categoria/?&message=$message");
                 }else{
                   $message = "Algum erro conteceu, tente a inserção novamente";
-                  header("location: ".RAIZ_PROJETO."produto_unidade/produto_unidade_crud.php?&message=$message");
+                  header("location: ".RAIZ_PROJETO."produto_categoria/produto_categoria_crud.php?&message=$message");
                 }
             
             }elseif($_POST['button'] == "editar"){
               // EDITAR
               $data = [
                 'id' => $_POST['id'], 
-                'sigla' => $_POST['sigla'], 
+                'nome' => $_POST['nome'], 
                 'descricao' =>$_POST['descricao']
               ];
-              $unidade = new ProdutoUnidadeDAO();
-              $message = $unidade->editarUnidade($data);
+              $categoria = new ProdutoCategoriaDAO();
+              $message = $categoria->Editar($data);
               
               if($message === true){
-                $message = 'Unidade "'.$data['sigla'].'" alterada com sucesso!';
-                header('location: '.RAIZ_PROJETO.'produto_unidade/?message='.$message);
+                $message = 'Categoria "'.$data['nome'].'" alterada com sucesso!';
+                header('location: '.RAIZ_PROJETO.'produto_categoria/?message='.$message);
               }else{
                 $message = "Algum erro conteceu, tente alterar novamente";
-                header('location: '.RAIZ_PROJETO.'produto_unidade/produto_unidade_crud.php?id='.$data['id'].'&message='.$message);
+                header('location: '.RAIZ_PROJETO.'produto_categoria/produto_categoria_crud.php?id='.$data['id'].'&message='.$message);
               }
             }
             elseif($_POST['button'] == "delete"){
               // EXCLUIR
               
-              $unidade = new ProdutoUnidadeDAO();
-              $ExisteUnidade = $unidade->getProdutoUnidadeById($_POST['id']);
-              if($ExisteUnidade["id"]){
+              $categoria = new ProdutoCategoriaDAO();
+              $ExisteCategoria = $categoria->GetById($_POST['id']);
+              if($ExisteCategoria["id"]){
                 
-                $message = $unidade->deleteUnidade($ExisteUnidade["id"]);
+                $message = $categoria->Deletar($ExisteCategoria["id"]);
                 if($message === true){
-                  $message = 'Unidade "'.$ExisteUnidade['sigla'].'" alterada com sucesso!';
-                  header('location: '.RAIZ_PROJETO.'produto_unidade/?message='.$message);
+                  $message = 'Categoria "'.$ExisteCategoria['nome'].'" alterada com sucesso!';
+                  header('location: '.RAIZ_PROJETO.'produto_categoria/?message='.$message);
                 }else{
                   $message = "Algum erro conteceu, tente alterar novamente";
-                  header('location: '.RAIZ_PROJETO.'produto_unidade/produto_unidade_crud.php?id='.$POST['id'].'&message='.$message);
+                  header('location: '.RAIZ_PROJETO.'produto_categoria/produto_categoria_crud.php?id='.$POST['id'].'&message='.$message);
                 } 
               }else{
-                $message = "Unidade não existe";
-                header('location: '.RAIZ_PROJETO.'produto_unidade/produto_unidade_crud.php?id='.$POST['id'].'&message='.$message);
+                $message = "Categoria não existe";
+                header('location: '.RAIZ_PROJETO.'produto_categoria/produto_categoria_crud.php?id='.$POST['id'].'&message='.$message);
               }
               
                          
@@ -95,14 +96,14 @@ require "./ProdutoUnidadeDAO.php";
                     <?php endif ?>
                   </div>
                 <div class="card-body">
-                  <form name="edita_cadastra_unidades" method="post" action="produto_unidade_crud.php">
+                  <form name="edita_cadastra_categoria" method="post" action="produto_categoria_crud.php">
                     <?php if ($unidade): ?>
                       <input type="hidden" name="id" value="<?= $unidade["id"] ?>">
                       <div class="form-row">
                           <div class="form-group col-md-3">
-                              <label>Sigla</label>
-                              <input value="<?= $unidade["sigla"] ?>" name="sigla" type="text" class="form-control" placeholder="Sigla">
-                              <small class="form-text text-muted">Informe a sigla da unidade a ser cadastrada.</small>
+                              <label>nome</label>
+                              <input value="<?= $unidade["nome"] ?>" name="nome" type="text" class="form-control" placeholder="nome">
+                              <small class="form-text text-muted">Informe a nome da unidade a ser cadastrada.</small>
                           </div>
                           <div class="form-group col-md-9">
                               <label>Descrição</label>
@@ -111,7 +112,7 @@ require "./ProdutoUnidadeDAO.php";
                           </div>
                       </div>
                       <div class="card-footer">
-                        <a href="<?= RAIZ_PROJETO ?>produto_unidade" class="btn btn-primary"> Voltar</a>
+                        <a href="<?= RAIZ_PROJETO ?>produto_categoria" class="btn btn-primary"> Voltar</a>
                         <button type="submit" name="button" value="editar"
                             class="btn btn-success pull-right">Salvar</button>
                         <button type="submit" name="button" value="delete"
@@ -120,9 +121,9 @@ require "./ProdutoUnidadeDAO.php";
                     <?php else: ?>
                       <div class="form-row">
                           <div class="form-group col-md-3">
-                              <label>Sigla</label>
-                              <input name="sigla" type="text" class="form-control" placeholder="Sigla">
-                              <small class="form-text text-muted">Informe a sigla da unidade a ser cadastrada.</small>
+                              <label>nome</label>
+                              <input name="nome" type="text" class="form-control" placeholder="nome">
+                              <small class="form-text text-muted">Informe a nome da unidade a ser cadastrada.</small>
                           </div>
                           <div class="form-group col-md-9">
                               <label>Descrição</label>
@@ -131,7 +132,7 @@ require "./ProdutoUnidadeDAO.php";
                           </div>
                       </div>
                       <div>
-                        <a href="<?= RAIZ_PROJETO ?>produto_unidade" class="btn btn-primary"> Voltar</a>
+                        <a href="<?= RAIZ_PROJETO ?>produto_categoria" class="btn btn-primary"> Voltar</a>
                         <button type="submit" name="button" value="cadastrar"
                             class="btn btn-success pull-right">Salvar</button>
                     </div>

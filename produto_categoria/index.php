@@ -1,23 +1,19 @@
 <?php
 require ".././Config.php";
-require "./ProdutoUnidadeDAO.php";
+require "./ProdutoCategoriaDAO.php";
 error_reporting(0);
         
-        $title = "Unidades de produtos";
-        $ProdutoUnidade = new ProdutoUnidadeDAO();
-        $ProdutoUnidades = $ProdutoUnidade->ListarProdutoUnidade();
-        // echo"<pre>";
-        // var_dump($ProdutoUnidades);
-        // die("");
+        $title = "Categoria de produtos";
+        $ProdutoCategoria = new ProdutoCategoriaDAO();
+        $ProdutoCategorias = $ProdutoCategoria->Listar();
+        
         $message = '';
         if($_GET['message']){
             $message = $_GET['message'];
         } 
         if($_POST && !empty($_POST["pesquisa-usuarios"])){
-          $ProdutoUnidades = $ProdutoUnidade->pesquisaProdutoUnidade($_POST["pesquisa-usuarios"]);
-          $message = "Resultado para a pesquisa: ".$_POST["pesquisa-usuarios"];
-        }else{
-          $message = "Pesquisa sem conteúdo informado";
+          $ProdutoCategorias = $ProdutoCategoria->Pesquisar($_POST["pesquisa-usuarios"]);
+          $message = 'Resultado para a pesquisa: "'.$_POST["pesquisa-usuarios"].'"';
         }
 ?>
 
@@ -55,7 +51,7 @@ error_reporting(0);
                                 </form>
                             </div>
                             <div style=" width: 50%; text-align: right;">
-                                <a href="<?= RAIZ_PROJETO ?>produto_unidade/produto_unidade_crud.php?"
+                                <a href="<?= RAIZ_PROJETO ?>produto_categoria/produto_categoria_crud.php?"
                                     class="btn btn-success btn-lg">Cadastrar</a>
                             </div>
                         </div>
@@ -71,19 +67,19 @@ error_reporting(0);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if ($ProdutoUnidades): ?>
+                                        <?php if ($ProdutoCategorias): ?>
                                         <form method="post" id="form">
 
-                                            <?php foreach($ProdutoUnidades as $key=>$ProdutoUnidade): ?>
+                                            <?php foreach($ProdutoCategorias as $key=>$item): ?>
                                             <tr>
-                                                <th scope="row" name="<?= $ProdutoUnidade['id'] ?>" form="form">
-                                                    <?= $ProdutoUnidade['id'] ?></th>
-                                                <td name="<?= $ProdutoUnidade['sigla'] ?>" form="form">
-                                                    <?= $ProdutoUnidade['sigla'] ?></td>
-                                                <td name="<?= $ProdutoUnidade['descricao'] ?>" form="form">
-                                                    <?= $ProdutoUnidade['descricao'] ?></td>
+                                                <th scope="row" name="<?= $item['id'] ?>" form="form">
+                                                    <?= $item['id'] ?></th>
+                                                <td name="<?= $item['nome'] ?>" form="form">
+                                                    <?= $item['nome'] ?></td>
+                                                <td name="<?= $item['descricao'] ?>" form="form">
+                                                    <?= $item['descricao'] ?></td>
                                                 <td><a
-                                                        href="<?= RAIZ_PROJETO ?>produto_unidade/produto_unidade_crud.php?id=<?= $ProdutoUnidade['id'] ?>">
+                                                        href="<?= RAIZ_PROJETO ?>produto_categoria/produto_categoria_crud.php?id=<?= $item['id'] ?>">
                                                         Editar</a></td>
                                             </tr>
                                             <?php endforeach; ?>
