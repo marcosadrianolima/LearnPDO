@@ -17,6 +17,15 @@
         <!-- DATATABLES -->
         <link rel="stylesheet" href="../public/otika/bundles/datatables/datatables.min.css">
         <link rel="stylesheet" href="../public/otika/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+
+        <!-- FORMS ADVANCED | PAGE PRODUTOS & PRODUTOS_CRUD-->
+        <link rel="stylesheet" href="../public/otika/bundles/bootstrap-daterangepicker/daterangepicker.css">
+        <link rel="stylesheet" href="../public/otika/bundles/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css">
+        <link rel="stylesheet" href="../public/otika/bundles/select2/dist/css/select2.min.css">
+        <link rel="stylesheet" href="../public/otika/bundles/jquery-selectric/selectric.css">
+        <link rel="stylesheet" href="../public/otika/bundles/bootstrap-timepicker/css/bootstrap-timepicker.min.css">
+        <link rel="stylesheet" href="../public/otika/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.css">
+        <!-- END FORMS ADVANCED | PAGE PRODUTOS & PRODUTOS_CRUD-->
     <!-- END otika style -->
     </head>
 <body>

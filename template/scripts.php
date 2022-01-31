@@ -18,5 +18,18 @@
         <script src="../public/otika/bundles/jquery-ui/jquery-ui.min.js"></script>
         <!-- Page Specific JS File -->
         <script src="../public/otika/js/page/datatables.js"></script>
-        
+
+        <!-- FORMS-ADVANCED | PAGE PRODUTOS-->
+        <script src="../public/otika/bundles/cleave-js/dist/cleave.min.js"></script>
+        <script src="../public/otika/bundles/cleave-js/dist/addons/cleave-phone.us.js"></script>
+        <script src="../public/otika/bundles/jquery-pwstrength/jquery.pwstrength.min.js"></script>
+        <script src="../public/otika/bundles/bootstrap-daterangepicker/daterangepicker.js"></script>
+        <script src="../public/otika/bundles/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+        <script src="../public/otika/bundles/bootstrap-timepicker/js/bootstrap-timepicker.min.js"></script>
+        <script src="../public/otika/bundles/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+        <script src="../public/otika/bundles/select2/dist/js/select2.full.min.js"></script>
+        <script src="../public/otika/bundles/jquery-selectric/jquery.selectric.min.js"></script>
+        <script src="../public/otika/js/page/forms-advanced-forms.js"></script>
+        <!-- END FORMS-ADVANCED | PAGE PRODUTOS-->
+
         <!-- END otika template -->
